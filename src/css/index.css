@@ -1,0 +1,97 @@
+.main-container {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  width: 90vw;
+  border-radius: 10px;
+  background-color: #9fc6e0;
+}
+
+.main-header {
+  margin: 0;
+  padding: 20px;
+  text-align: center;
+}
+
+.form-currency {
+  margin: 20px auto;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.input-currency {
+  flex: 1 0 33%;
+  width: 150px;
+}
+
+.btn {
+  font-weight: bold;
+  line-height: 38px;
+  border: 1px solid #888;
+  border-radius: 5px;
+  background-color: #50a6e0;
+  padding: 0 20px;
+}
+
+.btn:hover {
+  background-color: #4793c6;
+}
+
+.btn-none {
+  display: none;
+}
+
+
+.currency-info {
+  display: flex;
+  flex-direction: column;
+  margin: 10px auto;
+  flex-wrap: wrap;
+  width: 70vw;
+  background-color: #eee;
+  border-radius: 10px;
+  padding: 20px;
+  align-items: center;
+}
+
+.currency-none, .currency-loading {
+  display:none;
+}
+
+.img-flag {
+  display: block;
+
+}
+
+.flag-box {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.flag-container {
+  position: relative;
+  padding: 10px;
+}
+
+.flag-container:hover .img-flag{
+  opacity: 0.15;
+}
+
+.flag-container:hover .img-overlay{
+  opacity:1;
+}
+
+.img-overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  opacity: 0;
+  transition: .5s ease;
+  text-align:center;
+  font-weight: bold;
+}
