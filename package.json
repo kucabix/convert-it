@@ -9,7 +9,8 @@
     "react-icons": "^3.7.0",
     "react-scripts": "3.0.1",
     "react-select": "^3.0.4",
-    "react-spinners": "^0.5.12"
+    "react-spinners": "^0.5.12",
+    "styled-components": "^4.3.2"
   },
   "scripts": {
     "start": "react-scripts start",
