@@ -1,12 +1,12 @@
 //react libs
-import React from 'react'
-import ClipLoader from 'react-spinners/ClipLoader'
+import React, {Component} from 'react'
+import {ClipLoader} from 'react-spinners'
 import { css } from '@emotion/core'
 import Select from 'react-select'
 import {FaExchangeAlt, FaCoins} from 'react-icons/fa'
 //js files
-import currencies from './js/currencies'
-import {getData} from './js/get_data'
+import currencies from './js_data/currencies'
+import {getData} from './js_data/get_data'
 //styled-components
 import MainContainer from './elements/MainContainer'
 import Button from './elements/Button'
@@ -14,44 +14,54 @@ import Form from './elements/Form'
 //react components
 import CurrencyInfo from './components/CurrencyInfo'
 import Header from './components/Header'
+//typescript interfaces
+import CountryData from './interfaces/CountryData.interface'
 
-class App extends React.Component {
-  constructor(props) {
+interface AppState {
+  country: CountryData;
+  fromCurrency: any;
+  toCurrency: any;
+  selectedCurrency: Array<string>;
+  isLoading: boolean;
+}
+
+class App extends Component<{},AppState> {
+  constructor(props: any) {
     super(props)
     this.state = {
+      country: null,
       fromCurrency: '',
-      fromCountry: [],
       toCurrency: '',
-      toCountry: [],
       selectedCurrency: [],
-      exchangeRate: '',
       isLoading: false
     }
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps: any, prevState: any) {
     const {selectedCurrency} = this.state
     if (selectedCurrency !== prevState.selectedCurrency) {
       this.setState({isLoading: true})
       getData(selectedCurrency)
         .then(res => this.setState({
-          fromCountry: res.fromCountry,
-          toCountry: res.toCountry,
-          exchangeRate: res.exchange,
+          country: {
+            fromCountry: res.fromCountry,
+            toCountry: res.toCountry,
+            exchangeRate: res.exchange
+          },
           isLoading: false
         }))
     }
   }
 
-  handleFromCurrencyChange = (fromCurrency) => {
+  handleFromCurrencyChange = (fromCurrency: any) => {
     this.setState({fromCurrency})
   }
 
-  handleToCurrencyChange = (toCurrency) => {
+  handleToCurrencyChange = (toCurrency: any) => {
     this.setState({toCurrency})
   }
 
-  handleSubmit = (event) => {
+  handleSubmit = (event: any) => {
     event.preventDefault()
     let current = this.state.selectedCurrency.slice()
     current[0] = this.state.fromCurrency.value
@@ -67,13 +77,20 @@ class App extends React.Component {
   }
 
   render() {
-    const {fromCurrency, toCurrency, exchangeRate, fromCountry, toCountry, isLoading, selectedCurrency} = this.state
+    const {fromCurrency, toCurrency, country, isLoading, selectedCurrency} = this.state
+    let currencyInfo
+    if (country) {
+      currencyInfo = <CurrencyInfo
+          currency={selectedCurrency}
+          countries={country}
+          none={!selectedCurrency.length || isLoading}
+        /> 
+    }
     return(
       <MainContainer>
         <Header />
         <Form onSubmit={this.handleSubmit}>
           <Select
-            className='input-currency'
             value={fromCurrency}
             onChange={this.handleFromCurrencyChange}
             placeholder='From...'
@@ -81,25 +98,18 @@ class App extends React.Component {
           />
           <Button none={!selectedCurrency.length} onClick={this.toggleCurrency}><FaExchangeAlt/></Button>
           <Select
-            className='input-currency'
             value={toCurrency}
             onChange={this.handleToCurrencyChange}
             placeholder='To...'
             options={currencies}
           />
-          <Button><FaCoins /> Convert it!</Button>
+          <Button align={!!selectedCurrency.length}><FaCoins /> Convert it!</Button>
         </Form>
         <ClipLoader
           css={css`display: block;margin: 20px auto;`}
           loading={isLoading}
         />
-        <CurrencyInfo
-          currency={selectedCurrency}
-          fromCountry={fromCountry}
-          toCountry={toCountry}
-          rate={exchangeRate}
-          none={!selectedCurrency.length || isLoading}
-        />
+        {currencyInfo}
       </MainContainer>
     )
   }

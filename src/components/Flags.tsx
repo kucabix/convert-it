@@ -1,11 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
-import countriesISO from '../js/countriesIso'
+const countriesIso = require('../js_data/countriesIso.json')
 
 const FlagBox = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: auto auto auto auto;
 `
 
 const Overlay = styled.div`
@@ -31,9 +30,9 @@ const FlagContainer = styled.div`
   }
 `
 
-const Flags = (props) => {
+const Flags = (props: {countries: Array<string>}) => {
   const flags = props.countries.map(country => {
-    const iso = countriesISO[country]
+    const iso: any = countriesIso[country]
     return(
       <FlagContainer key={iso}>
         <img

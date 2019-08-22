@@ -1,11 +1,11 @@
 import styled, { css } from 'styled-components'
 
-export default styled.button`
+export default styled.button<{none?: boolean; align?: boolean}>`
   font-family: Montserrat;
   font-weight: bold;
-  line-height: 38px;
   border: 1px solid #888;
-  border-radius: 5px;
+  line-height: 20px;
+  border-radius: 3px;
   background-color: #50a6e0;
   padding: 0 20px;
   &:hover{
@@ -14,4 +14,10 @@ export default styled.button`
   ${props => props.none && css`
     display: none;
   `}
+  @media (min-width: 700px) {
+    ${props => props.align && css`
+      grid-column: 2
+    `} 
+    line-height: 38px;
+  }
 `

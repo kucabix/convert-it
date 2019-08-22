@@ -1,7 +1,7 @@
 import React from 'react'
 import styled, {css} from 'styled-components'
 
-const MainHeader = styled.h1`
+const MainHeader = styled.h1<{size: string}>`
   font-family: Montserrat;
   margin: 0;
   padding: 20px;
