@@ -1,6 +1,6 @@
 const axios = require('axios')
 
-const getExchangeRate = async (fromCurrency, toCurrency, url) => {
+const getExchangeRate = async (fromCurrency: string, toCurrency: string, url: string) => {
   const response = await axios.get(url)
   const rate = response.data.rates
   const base = 1 / rate[fromCurrency]
@@ -11,16 +11,16 @@ const getExchangeRate = async (fromCurrency, toCurrency, url) => {
   return `Exchange rate: ${exchangeRate.toFixed(3)}`
 }
 
-const getCountries = async (toCurrency, url) => {
+const getCountries = async (toCurrency: string, url: string) => {
   try {
     const response = await axios.get(`${url}${toCurrency}`)
-    return response.data.map(country => country.name)
+    return response.data.map((item: any) => item.name)
   } catch (e) {
     throw new Error (`Unable to get countries that use ${toCurrency}`)
   }
 }
 
-const getData = async (currencies) => {
+const getData = async (currencies: Array<string>) => {
   const fromCountry = await getCountries(currencies[0], 'https://restcountries.eu/rest/v2/currency/')
   const toCountry = await getCountries(currencies[1], 'https://restcountries.eu/rest/v2/currency/')
   const exchange = await getExchangeRate(currencies[0], currencies[1], 'http://data.fixer.io/api/latest?access_key=9b82443638e1ca1466eb99939d777ee8')
