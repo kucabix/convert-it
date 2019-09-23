@@ -1,0 +1,138 @@
+$desktop-width: 700px;
+@mixin desktop {
+    @media (min-width: #{$desktop-width}) {
+        @content;
+    }
+}
+
+.main--container {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    background-color: #9fc6e0;
+    font-family: Montserrat;
+    .header {
+        padding: 20px;
+        text-align: center;
+    }
+    .header--big {
+        font-weight: bold;
+        font-size: 35px;
+    }
+    .header--small {
+        font-size: 20px;
+    }
+    .button {
+        font-family: Montserrat;
+        font-weight: bold;
+        border: 1px solid #888;
+        line-height: 20px;
+        border-radius: 3px;
+        background-color: #50a6e0;
+        padding: 0 20px;
+    
+        &:hover{
+            background-color: #4793c6;
+        }
+    
+        &--none {
+            @extend .button !optional;
+            display: none;
+        }
+    }
+    @include desktop {
+        width: 80vw;
+        border-radius: 10px;
+        .button {
+            line-height: 38px;
+        }
+        .button--align {
+            grid-column: 2;
+        }
+    }
+}
+
+.form--currency {
+    margin: 20px auto;
+    display: grid;
+    grid-template-rows: 40px;
+    grid-gap: 10px;
+    width: 200px;
+    font-size: 12px;    
+    @include desktop {
+        grid-template-columns: 180px 180px 180px;
+        width: 100%;
+        justify-content: center;
+        grid-gap: 10px 10px;
+        font-size: 15px;
+    }
+}
+
+.info--currency {
+    display: flex;
+    flex-direction: column;
+    margin: 10px auto;
+    flex-wrap: wrap;
+    width: 80%;
+    background-color: #eee;
+    border-radius: 10px;
+    padding: 20px;
+    justify-content: center;
+    align-items: center;
+    &--none {
+        @extend .info--currency !optional;
+        display: none;
+    }
+
+    .flag--box {
+        display: grid;
+        grid-template-columns: auto auto auto auto;
+    }
+    
+    .overlay {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        opacity: 0;
+        transition: .5s ease;
+        text-align:center;
+        font-weight: bold;
+        font-size: 12px;
+    }
+    
+    .flag--container {
+        position: relative;
+        padding: 5px;
+        &:hover .overlay {
+          opacity: 1;
+        }
+        &:hover .img-flag {
+          opacity: 0.15;
+        }
+        .img-flag {
+            width: 50px;
+        }
+    }
+
+    @include desktop {
+        width: 80%;
+        justify-content: center;
+        .flag--container {
+            padding: 10px;
+            .img-flag {
+                width: 70px;
+            }
+        }
+        .overlay {
+            font-size: 16px;
+        }
+    }
+}
+
+.error {
+    color: rgb(187, 48, 48);
+    margin: 10px auto 30px;
+    font-weight: bold;
+}
